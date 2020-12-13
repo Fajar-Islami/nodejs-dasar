@@ -1,0 +1,114 @@
+Video 8
+semua di app.js
+
+Middleware
+dijalankan dari atas kebawah
+
+app.get = dijalankan ketika get request ke route tertentu
+app.use = run every time
+
+404 tarok dibawah agar dijalankan terakhir
+
+next()
+untuk menjalankan middleware selanjutnya
+karena node tidak bisa pindah otomatis kebawahnya
+
+3rd party middleware
+npm i morgan
+menjalankan semua middleware
+
+static files
+server protek file otomatis dari user
+agak bisa akses file secara root
+untuk bisa akses css, karena tidak bisa akses langsung css
+
+
+Video 9
+Mongodb
+ - user collection
+ - blog collection = ada formatnya, key dan valuenya
+	id otomatis terbentuk
+	bisa crud
+
+setup mongodb atlas
+1. buat cluster
+2. buat database, klik collection di cluster
+3. database access
+	user		: fajarislami07
+	password 	: 6JWZ7jmeDxpefDWY
+4. setting ip address
+
+npm i mongoose
+Menit 7.00 mongoose 
+Menit 8.00 schema
+Menit 9.00 Models
+untuk komunikasi skema dengan database, bisa crud
+
+pemanggilan mongoDB async
+jadi perlu promise
+
+agar konek db dlu baru konek server nodejs, pindah ke then dalam mongoose
+
+pembuatan schema di folder models
+skema = struktur dokumen / tabel
+timestamps: true ==> membuat created_at dan update_at
+
+Menit 19.00
+Getting & Saving data
+.save() ==> untuk simpan data
+.find() ==> select all
+.findById() ==> select by id
+
+Menit 30.00
+Menampilkan data di views
+.sort({ createdAt: -1 }) ==> mengurutkan dari yang besar ke kecil
+
+Video 10
+Request Type
+GET	: read, bisa pakai :id
+POST 	: create
+DELETE	: delete, butuh :id
+PUT 	: update, butuh :id
+
+app.js
+app.use(express.urlencoded({extended:true})); 
+
+Find By ID
+Route param menit 12.00
+http://localhost:3000/blogs/:id
+
+app.get('/blogs/:id', (req, res) => {
+  const id = req.params.id; //sesusai dengan :id
+  console.log(id);
+});
+
+
+Delete
+detail.ejs
+// Mengirim request
+fetch(endpoint, {
+  method: 'DELETE',
+})
+
+dihandle di app.js
+app.delete('/blogs/:id', (req, res) => {
+  const id = req.params.id; //sesusai dengan :id
+  Blog.findByIdAndDelete(id)
+})
+
+Video 11
+
+Menit 10.00 MVC = Model, View, Controller
+
+Video 12
+peruban pada blogController.js
+jika params tidak ditemukan
+const blog_detail = (req, res) => {
+  const id = req.params.id; //sesusai dengan :id
+  // console.log(id);
+  Blog.findById(id)
+    .then((result) => {
+      res.render('blogs/details', { blog: result, title: 'Blog Detail' });
+    })
+    .catch((err) => res.status(404).render('404', { title: 'Blog not found' }));
+};
